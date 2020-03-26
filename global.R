@@ -1,6 +1,6 @@
 #load required packages
 libs = c("shiny", "purrr", "stringr", "tibble", 
-				 "tidyr", "xml2", "plotly", "viridis",
+				 "tidyr", "plotly", "viridis",
 				 "ggplot2", "readr", "DT")
 
 for(p in libs){

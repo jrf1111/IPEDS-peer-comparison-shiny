@@ -1,9 +1,5 @@
 library(plotly)
 navbarPage("IPEDS Peer Comparison Dashboard",
-					 tabPanel("All Data",
-					 				 downloadButton('downloadData', 'Download'),
-					 				 DT::dataTableOutput("table1")), 
-					 
 					 tabPanel("Dashboard",
 					 				 sidebarLayout(sidebarPanel(
 					 				 	selectInput('x', 'Variable', sort(unique(mdata$Question))),
@@ -11,5 +7,9 @@ navbarPage("IPEDS Peer Comparison Dashboard",
 					 				 ),
 					 				 mainPanel(
 					 				 	plotlyOutput("plot"))
-					 				 ))
+					 				 )),
+					 
+					 tabPanel("View and download data",
+					 				 downloadButton('downloadData', 'Download'),
+					 				 DT::dataTableOutput("table1"))
 )
