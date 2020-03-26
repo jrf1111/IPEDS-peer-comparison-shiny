@@ -1,13 +1,16 @@
 #load required packages
-libs = c("shiny", "purrr", "stringr", "tibble", 
-				 "tidyr", "plotly", "viridis",
-				 "ggplot2", "readr", "DT")
-
-for(p in libs){
-	# if(!require(p, character.only = TRUE)) 
-	# 	install.packages(p)
-	library(p, character.only = TRUE)
-}
+library(readr)
+library(DT)
+library(ggplot2)
+library(plotly)
+library(tidyr)
+library(tibble)
+library(stringr)
+library(shiny)
+library(purrr)
+library(DT)
+library(dplyr)
+library(viridis)
 
 
 
