@@ -1,10 +1,7 @@
 #load required packages
-libs = c("shiny", "dbplyr", "dplyr", "forcats", "hms",
-				 "jsonlite", "lubridate", "modelr", "pillar", 
-				 "purrr", "reprex", "rlang", "rstudioapi", 
-				 "rvest", "stringr", "tibble", "tidyr", "xml2", 
-				 "plotly", "viridis", "stringr", "ggplot2", 
-				 "readr", "DT")
+libs = c("shiny", "purrr", "stringr", "tibble", 
+				 "tidyr", "xml2", "plotly", "viridis",
+				 "ggplot2", "readr", "DT")
 
 for(p in libs){
 	# if(!require(p, character.only = TRUE)) 
@@ -21,12 +18,13 @@ for(p in libs){
 #import data downloaded from IPEDS
 mdata = read_csv("https://raw.githubusercontent.com/jrf1111/IPEDS-peer-comparison-shiny/master/Data_3-25-2020.csv")
 
-mdata$X252 = NULL #delete extra column
+mdata = mdata[, -ncol(mdata)] #delete extra column at end of file
 
 
 #convert data from wide to long
 mdata = mdata %>% 
-	pivot_longer(-c(UnitID, "Institution Name"), names_to = "Question1", values_to = "Value")
+	pivot_longer(-c(UnitID, "Institution Name"), 
+							 names_to = "Question1", values_to = "Value")
 
 
 #create and format a year variable by pulling year from mdata$Question1
