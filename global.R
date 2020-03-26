@@ -1,6 +1,10 @@
 #load required packages
-libs = c("shiny", "tidyverse", "plotly", 
-				 "viridis", "stringr", "ggplot2", "readr", "DT")
+libs = c("shiny", "dbplyr", "dplyr", "forcats", "hms",
+				 "jsonlite", "lubridate", "modelr", "pillar", 
+				 "purrr", "reprex", "rlang", "rstudioapi", 
+				 "rvest", "stringr", "tibble", "tidyr", "xml2", 
+				 "plotly", "viridis", "stringr", "ggplot2", 
+				 "readr", "DT")
 
 for(p in libs){
 	# if(!require(p, character.only = TRUE)) 
