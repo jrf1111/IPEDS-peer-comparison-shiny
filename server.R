@@ -1,14 +1,14 @@
 function(input, output) {
 	
-	#load required packages
-	libs = c("shiny", "tidyverse", "plotly", 
-					 "viridis", "stringr", "ggplot2", "readr", "DT")
-	
-	for(p in libs){
-		if(!require(p, character.only = TRUE)) 
-			install.packages(p);
-		library(p, character.only = TRUE)
-	}
+	# #load required packages
+	# libs = c("shiny", "tidyverse", "plotly", 
+	# 				 "viridis", "stringr", "ggplot2", "readr", "DT")
+	# 
+	# for(p in libs){
+	# 	if(!require(p, character.only = TRUE)) 
+	# 		install.packages(p);
+	# 	library(p, character.only = TRUE)
+	# }
 	
 	
 	
@@ -41,6 +41,10 @@ function(input, output) {
 	
 	
 	
+	mdata$Year = factor(mdata$Year, 
+											levels = sort(unique(as.numeric(as.character(mdata$Year))), 
+																		decreasing = TRUE))
+	
 	
 	
 	#Creating all Output objects -------
@@ -66,11 +70,7 @@ function(input, output) {
 
 	output$plot <- renderPlotly({
 		
-		mdata$Year = factor(mdata$Year, 
-											 levels = sort(unique(as.numeric(as.character(mdata$Year))), 
-											 							decreasing = TRUE))
-		
-		
+			
 		temp = mdata[mdata$Question == input$x, ]
 		
 		
