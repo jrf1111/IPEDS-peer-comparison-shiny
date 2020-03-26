@@ -1,7 +1,7 @@
 function(input, output) {
 	
 	#load required packages
-	libs = c("shiny", "flexdashboard", "tidyverse", "plotly", 
+	libs = c("shiny", "tidyverse", "plotly", 
 					 "viridis", "stringr", "ggplot2", "readr", "DT")
 	
 	for(p in libs){
