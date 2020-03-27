@@ -19,15 +19,18 @@ library(viridis)
 
 
 #import data downloaded from IPEDS
-mdata = read_csv("https://raw.githubusercontent.com/jrf1111/IPEDS-peer-comparison-shiny/master/Data_3-25-2020.csv")
+mdata = read_csv(
+	"https://raw.githubusercontent.com/jrf1111/IPEDS-peer-comparison-shiny/master/Data_3-25-2020.csv"
+)
 
-mdata = mdata[, -ncol(mdata)] #delete extra column at end of file
+mdata = mdata[,-ncol(mdata)] #delete extra column at end of file
 
 
 #convert data from wide to long
-mdata = mdata %>% 
-	pivot_longer(-c(UnitID, "Institution Name"), 
-							 names_to = "Question1", values_to = "Value")
+mdata = mdata %>%
+	pivot_longer(-c(UnitID, "Institution Name"),
+							 names_to = "Question1",
+							 values_to = "Value")
 
 
 #create and format a year variable by pulling year from mdata$Question1
@@ -46,7 +49,8 @@ mdata$Question = gsub("\\s{1,}20\\d{2}-\\d{2}", "", mdata$Question)
 mdata$Question = gsub("\\s{1,}20\\d{2}", "", mdata$Question)
 mdata$Question = gsub("  ", " ", mdata$Question)
 
-mdata$Year = factor(mdata$Year, 
-										levels = sort(unique(as.numeric(as.character(mdata$Year))), 
-																	decreasing = TRUE))
-
+mdata$Year = factor(mdata$Year,
+										levels = sort(unique(as.numeric(
+											as.character(mdata$Year)
+										)),
+										decreasing = TRUE))
