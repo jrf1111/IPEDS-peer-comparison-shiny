@@ -8,7 +8,15 @@ navbarPage("IPEDS Peer Comparison Dashboard",
 
 					 				 
 					 				 fluidPage(
+					 				 
+					 				 	tags$head(
+					 				 		tags$style(HTML(".plotly { margin-bottom: 200px; }
+					 				 										.dataTables_wrapper { margin-bottom: 100px; }
+					 				 										" )
+					 				 		)
+					 				 	),
 					 				 	
+					 				 		
 					 				 	fluidRow(
 					 				 		column(width = 3, 
 					 				 					 selectInput('x', 'Variable', sort(unique(mdata$Question))),
@@ -17,6 +25,7 @@ navbarPage("IPEDS Peer Comparison Dashboard",
 					 				 					 sliderInput("size", "Text size", min = 6, max = 50, value = 16, step = 1, round = T)
 					 				 		),
 					 				 		
+					 				 						 				 		
 					 				 		column(width = 9,
 					 				 					 plotlyOutput("plot"))
 					 				 		
@@ -25,15 +34,6 @@ navbarPage("IPEDS Peer Comparison Dashboard",
 					 				 	
 					 				 	
 					 				 	fluidRow(
-					 				 		br(),
-					 				 		br(),
-					 				 		br(),
-					 				 		br(),
-					 				 		br(),
-					 				 		br(),
-					 				 		br(),
-					 				 		br(),
-					 				 		
 					 				 		
 					 				 		column(width = 9,
 					 				 					 DT::dataTableOutput("plotData"),
