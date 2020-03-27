@@ -26,7 +26,7 @@ navbarPage(
 				column(
 					width = 3,
 					selectInput('x', 'Variable', sort(unique(mdata$Question))),
-					#selectInput('plotType', 'Plot type', c("Bar", "Column", "Line") ),
+					selectInput('plotType', 'Plot type', c("Bar", "Column", "Line") ),
 					checkboxInput("showTable", "Show data under plot"),
 					sliderInput(
 						"size",

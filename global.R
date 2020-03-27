@@ -56,4 +56,5 @@ mdata$Year = factor(mdata$Year,
 										levels = sort(unique(as.numeric(
 											as.character(mdata$Year)
 										)),
-										decreasing = TRUE))
+										decreasing = F),
+										ordered = T)

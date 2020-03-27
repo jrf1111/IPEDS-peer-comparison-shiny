@@ -74,54 +74,135 @@ function(input, output) {
 		
 		
 		
-		#make the chart in ggplot
-		p = ggplot() +
-			geom_col(
-				data = temp,
-				mapping = aes(y = missing, x = Institution),
-				position = "dodge",
-				color = "red",
-				linetype = temp$missing_line,
-				na.rm = T
-			) +
-			geom_col(
-				data = temp,
-				mapping = aes(
-					y = Value,
-					x = Institution,
-					fill = Year,
-					text = temp$`Institution Name`
-				),
-				position = "dodge",
-				na.rm = T
-			) +
-			scale_fill_viridis_d(guide = guide_legend(reverse = TRUE)) +
-			coord_flip() +
-			theme_bw() +
-			labs(y = ylab) +
-			theme(
-				text = element_text(size = input$size),
-				plot.margin = margin(
-					b = space,
-					l = -100,
-					r = 100,
-					t = 50
-				),
-				legend.position = "top"
+		#make the appropriate chart in ggplot
+		if(input$plotType == "Bar"){
+			
+			
+			
+			p = ggplot() +
+				geom_col(
+					data = temp,
+					mapping = aes(y = missing, x = Institution),
+					position = "dodge",
+					color = "red",
+					linetype = temp$missing_line,
+					na.rm = T
+				) +
+				geom_col(
+					data = temp,
+					mapping = aes(
+						y = Value,
+						x = Institution,
+						fill = Year,
+						text = temp$`Institution Name`
+					),
+					position = "dodge",
+					na.rm = T
+				) +
+				
+				scale_fill_viridis_d(guide = guide_legend(reverse = F),
+														 name = "Year") +
+				coord_flip() +
+				
+				theme_bw() +
+				labs(y = ylab) +
+				theme(
+					text = element_text(size = input$size),
+					plot.margin = margin(
+						b = space,
+						l = -100,
+						r = 100,
+						t = 50
+					),
+					legend.position = "top"
+				)
+			
+			
+			
+			py = ggplotly(
+				p,
+				height = 600,
+				tooltip = c("text", "Year", "Value"),
+				legend = list(
+					orientation = "h",
+					x = 0.4,
+					y = -0.2
+				)
 			)
+			
+			
+			#reverse the order of the years
+			pdata = py[["x"]][["data"]]
+			pdata_swap = pdata
+			pdata_swap[[1]] = NULL
+			
+			for(i in length(pdata):2){
+				pdata[[i]] = pdata_swap[[1+abs(i - length(pdata))]]
+			}
+			
+			py[["x"]][["data"]] = pdata
+			
+			py
+			
+			
+		} else if(input$plotType == "Column"){
+			
+			p = ggplot() +
+				geom_col(
+					data = temp,
+					mapping = aes(y = missing, x = str_wrap(temp$`Institution Name`, 10)),
+					position = "dodge",
+					color = "red",
+					linetype = temp$missing_line,
+					na.rm = T
+				) +
+				geom_col(
+					data = temp,
+					mapping = aes(
+						y = Value,
+						x = str_wrap(temp$`Institution Name`, 10),
+						fill = Year,
+						text = temp$`Institution Name`
+					),
+					position = "dodge",
+					na.rm = T
+				) +
+				scale_fill_viridis_d(guide = guide_legend(reverse = TRUE)) +
+				theme_bw() +
+				labs(x = ylab) +
+				theme(
+					text = element_text(size = input$size),
+					plot.margin = margin(
+						b = space,
+						l = -100,
+						r = 100,
+						t = 50
+					),
+					legend.position = "top"
+				)
+			
+			
+			py = ggplotly(
+				p,
+				height = 600,
+				tooltip = c("text", "Year", "Value"),
+				legend = list(
+					orientation = "h",
+					x = 0.4,
+					y = -0.2
+				)
+			)
+			
+			py
+			
+			
+		}
 		
 		
-		#make ggplot chart interactive
-		ggplotly(
-			p,
-			height = 600,
-			tooltip = c("text", "Year", "Value"),
-			legend = list(
-				orientation = "h",
-				x = 0.4,
-				y = -0.2
-			)
-		)
+		
+	
+		
+
 		
 	})
 	
@@ -129,9 +210,9 @@ function(input, output) {
 	
 	
 	
-
-# chart data --------------------------------------------------------------
-
+	
+	# chart data --------------------------------------------------------------
+	
 	output$plotData = DT::renderDataTable({
 		temp = mdata[mdata$Question == input$x, ]
 		temp = temp %>% select(`Institution Name`, Year, Value)
