@@ -116,7 +116,7 @@ function(input, output) {
 	},
 	
 	filter="top", 
-	options = list(pageLength = 6, scrollX=TRUE, autoWidth = TRUE, 
+	options = list(pageLength = 6, scrollX=TRUE, autoWidth = F, 
 								 sDom  = '<"top">t<"bottom">p')
 	
 	)
