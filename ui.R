@@ -7,9 +7,22 @@ navbarPage("IPEDS Peer Comparison Dashboard",
 					 				 ),
 					 				 mainPanel(
 					 				 	plotlyOutput("plot"))
-					 				 )),
+					 				 ),
+					 				 
+					 				 hr(),
+					 				 #imageOutput("GHlogo"),
+					 				 tags$img(src = "GitHub-Mark-120px-plus.png", width = "20px", height = "20px"),
+					 				 tags$a(href="https://github.com/jrf1111/IPEDS-peer-comparison-shiny", "Click here for the GitHub repo")
+					 				 
+					 				 ),
 					 
 					 tabPanel("View and download data",
 					 				 downloadButton('downloadData', 'Download'),
-					 				 DT::dataTableOutput("table1"))
+					 				 DT::dataTableOutput("table1"),
+					 				 
+					 				 hr(),
+					 				 #imageOutput("GHlogo"),
+					 				 tags$a(href="https://github.com/jrf1111/IPEDS-peer-comparison-shiny", "Click here for the GitHub repo")
+					 				 
+					 )
 )
