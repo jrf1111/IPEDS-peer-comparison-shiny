@@ -1,3 +1,6 @@
+#anything done in this global.R file will be available in any other file
+
+
 #load required packages
 library(readr)
 library(DT)

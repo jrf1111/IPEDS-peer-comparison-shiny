@@ -28,10 +28,12 @@ function(input, output) {
 	#plotly chart ----
 	
 	output$plot <- renderPlotly({
+		
+		#create a new dataset with only the variable of interest
 		temp = mdata[mdata$Question == input$x, ]
 		
 		
-		
+		#add line breaks for the chart
 		temp$Institution = temp$`Institution Name`
 		
 		temp = temp %>%
@@ -48,10 +50,11 @@ function(input, output) {
 			)
 		
 		
+		
+		#for highlighting missing data on chart
 		temp$missing = case_when(is.na(temp$Value) ~ 0, !is.na(temp$Value) ~ NA_real_)
 		
 		temp$missing_alpha = case_when(is.na(temp$Value) ~ 1, !is.na(temp$Value) ~ 0)
-		
 		
 		temp$missing_line = case_when(is.na(temp$Value) ~ "solid", !is.na(temp$Value) ~ "blank")
 		
@@ -71,7 +74,7 @@ function(input, output) {
 		
 		
 		
-		
+		#make the chart in ggplot
 		p = ggplot() +
 			geom_col(
 				data = temp,
@@ -107,6 +110,8 @@ function(input, output) {
 				legend.position = "top"
 			)
 		
+		
+		#make ggplot chart interactive
 		ggplotly(
 			p,
 			height = 600,
@@ -124,7 +129,9 @@ function(input, output) {
 	
 	
 	
-	
+
+# chart data --------------------------------------------------------------
+
 	output$plotData = DT::renderDataTable({
 		temp = mdata[mdata$Question == input$x, ]
 		temp = temp %>% select(`Institution Name`, Year, Value)

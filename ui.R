@@ -17,8 +17,7 @@ navbarPage(
 			tags$head(tags$style(
 				HTML(
 					".plotly { margin-bottom: 200px; }
-					 				 										.dataTables_wrapper { margin-bottom: 100px; }
-					 				 										"
+					 .dataTables_wrapper { margin-bottom: 100px; }"
 				)
 			)),
 			
