@@ -3,7 +3,8 @@ function(input, output) {
 	
 	
 	#Creating all Output objects -------
-	output$table1 <- DT::renderDataTable({mdata}, filter='top', 
+	output$table1 <- DT::renderDataTable({mdata}, 
+																			 filter='top', 
 																			 options = list(pageLength = 10, scrollX=TRUE, autoWidth = TRUE, 
 																			 							 columnDefs = list(list(width = '200px', targets = 2))))
 	
@@ -62,6 +63,21 @@ function(input, output) {
 		)
 		
 		
+		
+		
+		#warn if missing data
+		if(any(is.na(temp$Value))){
+			ylab = paste(input$x, "(red lines indicate missing data)")
+		} else ylab = input$x
+		ylab = str_wrap(ylab, width = 50)  #wrap long labels
+		
+		
+		#add extra space between plot and label if needed
+		space = 25 + 25*( nchar(ylab) %/% 25 )
+		
+		
+		
+	
 		p = ggplot() + 
 			geom_col(data = temp, 
 							 mapping = aes(y = missing, x = Institution),
@@ -73,9 +89,9 @@ function(input, output) {
 			scale_fill_viridis_d(guide = guide_legend(reverse=TRUE)) +
 			coord_flip() +
 			theme_bw() +
-			labs(y = str_wrap(input$x, width = 50)) +
+			labs(y = ylab) +
 			theme(text = element_text(size = input$size), 
-						plot.margin = margin(b = 50, l=-100, r = 100, t=50),
+						plot.margin = margin(b = space, l=-100, r = 100, t=50),
 						legend.position="top")
 		
 		ggplotly(p, height = 600,
@@ -86,6 +102,24 @@ function(input, output) {
 	})
 	
 	
+	
+	
+	
+	
+	output$plotData = DT::renderDataTable({
+		
+		temp = mdata[mdata$Question == input$x, ]
+		temp = temp %>% select(`Institution Name`, Year, Value)
+		
+		if(input$showTable == T) temp
+		
+	},
+	
+	filter="top", 
+	options = list(pageLength = 6, scrollX=TRUE, autoWidth = TRUE, 
+								 sDom  = '<"top">t<"bottom">p')
+	
+	)
 
 	
 	
