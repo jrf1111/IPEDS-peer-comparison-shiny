@@ -62,23 +62,21 @@ function(input, output) {
 		temp$missing_line = case_when(is.na(temp$Value) ~ "solid", !is.na(temp$Value) ~ "blank")
 		
 		
-		
-		
-		#warn if missing data
-		if (any(is.na(temp$Value))) {
-			ylab = paste(input$x, "(red lines indicate missing data)")
-		} else
-			ylab = input$x
-		ylab = str_wrap(ylab, width = 50)  #wrap long labels
-		
-		
-		#add extra space between plot and label if needed
-		space = 25 + 25 * (nchar(ylab) %/% 25)
-		
-		
-		
 		#make the appropriate chart in ggplot
 		if(input$plotType == "Bar"){
+			
+			
+			
+			#warn if missing data
+			if (any(is.na(temp$Value))) {
+				ylab = paste(input$x, "(red lines indicate missing data)")
+			} else
+				ylab = input$x
+			ylab = str_wrap(ylab, width = 50)  #wrap long labels
+			
+			
+			#add extra space between plot and label if needed
+			space = 25 + 25 * (nchar(ylab) %/% 25)
 			
 			
 			
@@ -149,6 +147,22 @@ function(input, output) {
 			
 			
 		} else if(input$plotType == "Column"){
+			
+			
+			
+			#warn if missing data
+			if (any(is.na(temp$Value))) {
+				ylab = paste(input$x, "(red lines indicate missing data)")
+			} else
+				ylab = input$x
+			ylab = str_wrap(ylab, width = 50)  #wrap long labels
+			
+			
+			#add extra space between plot and label if needed
+			space = 25 + 25 * (nchar(ylab) %/% 25)
+			
+			
+			
 			
 			p = ggplot() +
 				geom_col(

@@ -38,14 +38,6 @@ navbarPage(
 											
 											c("Cividis", "Inferno", "Magma", "Plasma", "Viridis") ),
 					
-					# selectInput('colorScheme', 'Color scheme', c("Cividis", "Inferno", "Magma", "Plasma", "Viridis") ),
-					# tags$img(
-					# 	src = "tooltip_icon.png",
-					# 	width = "10px",
-					# 	height = "10px"),
-					# bsTooltip("colorScheme", "These color schemes provide color maps that are perceptually uniform in both color and black-and-white. They are also designed to be perceived by viewers with common forms of color blindness.",
-					# 					"right", options = list(container = "body")),
-					
 					
 					checkboxInput("showTable", "Show data under plot"),
 					sliderInput("size", "Text size", min = 6, max = 50, value = 16, step = 1,round = T)
