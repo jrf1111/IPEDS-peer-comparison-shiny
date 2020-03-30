@@ -132,16 +132,22 @@ function(input, output) {
 			)
 			
 			
-			#reverse the order of the years
-			pdata = py[["x"]][["data"]]
-			pdata_swap = pdata
-			pdata_swap[[1]] = NULL
-			
-			for(i in length(pdata):2){
-				pdata[[i]] = pdata_swap[[1+abs(i - length(pdata))]]
+			#for some reason ggplot2 and plotly disagree on how the years should be ordered.
+			#the below section makes sure the order of the legend and the order of the bars 
+			#are in (a) in agreement and (b) in chronological order
+			{
+				pdata = py[["x"]][["data"]]
+				pdata_swap = pdata
+				pdata_swap[[1]] = NULL
+				for(i in length(pdata):2){
+					pdata[[i]] = pdata_swap[[1+abs(i - length(pdata))]]
+				}
+				py[["x"]][["data"]] = pdata
 			}
 			
-			py[["x"]][["data"]] = pdata
+			
+			
+			
 			
 			py
 			
