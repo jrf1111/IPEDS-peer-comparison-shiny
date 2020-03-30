@@ -1,8 +1,6 @@
 function(input, output) {
 	#Creating all Output objects -------
-	output$table1 <- DT::renderDataTable({
-		mdata
-	},
+	output$table1 <- DT::renderDataTable({all_data},
 	filter = 'top',
 	options = list(
 		pageLength = 10,
@@ -16,16 +14,21 @@ function(input, output) {
 	output$downloadData <- downloadHandler(
 		filename = 'Download.csv',
 		content = function(file) {
-			write.csv(mdata[input[["table1_rows_all"]],], file, row.names = FALSE)
+			write.csv( all_data , file, row.names = FALSE)
+		}
+	)
+	
+	
+	output$downloadChartData <- downloadHandler(
+		filename = paste0(input$x, ".csv"),
+		content = function(file) {
+			write.csv(mdata[mdata$Question == input$x ,], file, row.names = FALSE)
 		}
 	)
 	
 	
 	
-	
-	
-	
-	#plotly chart ----
+	#plotly charts ----
 	
 	output$plot <- renderPlotly({
 		
@@ -100,7 +103,8 @@ function(input, output) {
 					na.rm = T
 				) +
 				
-				scale_fill_viridis_d(guide = guide_legend(reverse = F),
+				scale_fill_viridis_d(option = tolower(input$colorScheme),
+														 guide = guide_legend(reverse = F),
 														 name = "Year") +
 				coord_flip() +
 				
@@ -113,8 +117,7 @@ function(input, output) {
 						l = -100,
 						r = 100,
 						t = 50
-					),
-					legend.position = "top"
+					)
 				)
 			
 			
@@ -167,9 +170,10 @@ function(input, output) {
 					position = "dodge",
 					na.rm = T
 				) +
-				scale_fill_viridis_d(guide = guide_legend(reverse = TRUE)) +
+				scale_fill_viridis_d(option = tolower(input$colorScheme),
+														 guide = guide_legend(reverse = TRUE)) +
 				theme_bw() +
-				labs(x = ylab) +
+				labs(x = ylab, y = NULL) +
 				theme(
 					text = element_text(size = input$size),
 					plot.margin = margin(
@@ -177,8 +181,7 @@ function(input, output) {
 						l = -100,
 						r = 100,
 						t = 50
-					),
-					legend.position = "top"
+					)
 				)
 			
 			
@@ -195,6 +198,49 @@ function(input, output) {
 			
 			py
 			
+			
+		} else if(input$plotType == "Line"){
+			
+			
+			p = ggplot() +
+				geom_path(
+					data = temp,
+					mapping = aes(
+						y = Value,
+						x = Year,
+						group = str_wrap(temp$`Institution Name`, 10),
+						color = str_wrap(temp$`Institution Name`, 10),
+						text = temp$`Institution Name`
+					), 
+					size = 1
+				) + 
+				scale_color_viridis_d(option = tolower(input$colorScheme),
+															name = "Institution") +
+			theme_bw() +
+				labs(x = ylab) +
+				theme(
+					text = element_text(size = input$size),
+					plot.margin = margin(
+						b = space,
+						l = -100,
+						r = 100,
+						t = 50
+					)
+				)
+			
+			
+			py = ggplotly(
+				p,
+				height = 600,
+				tooltip = c("text", "Year", "Value"),
+				legend = list(
+					orientation = "h",
+					x = 0.4,
+					y = -0.2
+				)
+			)
+			
+			py
 			
 		}
 		

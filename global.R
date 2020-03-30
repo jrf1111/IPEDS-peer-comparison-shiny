@@ -2,18 +2,13 @@
 
 
 #load required packages
-library(readr)
 library(DT)
-library(ggplot2)
 library(plotly)
-library(tidyr)
-library(tibble)
-library(stringr)
+library(tidyverse)
 library(shiny)
-library(purrr)
 library(DT)
-library(dplyr)
 library(viridis)
+library(shinyBS)
 
 
 
@@ -58,3 +53,9 @@ mdata$Year = factor(mdata$Year,
 										)),
 										decreasing = F),
 										ordered = T)
+
+
+
+#data in the	"View and download all data" tab
+all_data = select(mdata, UnitID, 'Institution Name', Question1, Value, Year)
+colnames(all_data) = c("UnitID", 'Institution Name', "Variable", "Value", "Year")
