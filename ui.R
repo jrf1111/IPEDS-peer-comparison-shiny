@@ -1,4 +1,8 @@
-library(plotly)
+#File: ui.R
+#Desc: This file is used to define the user interface (UI).  That is, it is responsible 
+#      for creating everything the will interact with and see.
+
+
 navbarPage(
 	"IPEDS Peer Comparison Dashboard",
 	tabPanel(

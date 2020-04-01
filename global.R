@@ -1,4 +1,10 @@
-#anything done in this global.R file will be available in any other file
+#File: global.R
+#Desc: This optional file is used to perform actions (e.g., data loading, wrangling, etc.)
+#      that other files in the shiny app need to be able to access.  For example, 
+#      any packages that are loaded here or data that are imported here will be 
+#      available for use in the server.R and ui.R files.
+
+
 
 
 #load required packages

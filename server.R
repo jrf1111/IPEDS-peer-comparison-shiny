@@ -1,3 +1,6 @@
+#File: server.R
+#Desc: This file is really just one big function that assembles user input into outputs
+
 function(input, output) {
 	#Creating all Output objects -------
 	output$table1 <- DT::renderDataTable({all_data},
