@@ -2,7 +2,7 @@
 #Desc: This file is really just one big function that assembles user input into outputs
 
 function(input, output) {
-	#Creating all Output objects -------
+	#make the table that will show all the data -------
 	output$table1 <- DT::renderDataTable({all_data},
 	filter = 'top',
 	options = list(
@@ -13,7 +13,7 @@ function(input, output) {
 	))
 	
 	
-	## Download Buttons ----
+	# add a button to download the full data set ----
 	output$downloadData <- downloadHandler(
 		filename = 'Download.csv',
 		content = function(file) {
@@ -21,7 +21,7 @@ function(input, output) {
 		}
 	)
 	
-	
+	# add a button to download only the chart data ----
 	output$downloadChartData <- downloadHandler(
 		filename = paste0(input$x, ".csv"),
 		content = function(file) {
@@ -31,7 +31,7 @@ function(input, output) {
 	
 	
 	
-	#plotly charts ----
+	#make interactive charts with Plotly ----
 	
 	output$plot <- renderPlotly({
 		
@@ -39,7 +39,7 @@ function(input, output) {
 		temp = mdata[mdata$Question == input$x, ]
 		
 		
-		#add line breaks for the chart
+		#add line breaks ("\n") for the chart
 		temp$Institution = temp$`Institution Name`
 		
 		temp = temp %>%
@@ -103,12 +103,9 @@ function(input, output) {
 					position = "dodge",
 					na.rm = T
 				) +
-				
 				scale_fill_viridis_d(option = tolower(input$colorScheme),
-														 guide = guide_legend(reverse = F),
 														 name = "Year") +
 				coord_flip() +
-				
 				theme_bw() +
 				labs(y = ylab) +
 				theme(
@@ -122,7 +119,7 @@ function(input, output) {
 				)
 			
 			
-			
+			#convert static ggplot to interactive plotly chart
 			py = ggplotly(
 				p,
 				height = 600,
@@ -151,7 +148,7 @@ function(input, output) {
 			
 			
 			
-			
+			#return the plotly chart
 			py
 			
 			
@@ -172,7 +169,7 @@ function(input, output) {
 			
 			
 			
-			
+			#create static ggplot chart
 			p = ggplot() +
 				geom_col(
 					data = temp,
@@ -207,7 +204,7 @@ function(input, output) {
 					)
 				)
 			
-			
+			#convert static ggplot to interactive plotly chart
 			py = ggplotly(
 				p,
 				height = 600,
@@ -219,12 +216,13 @@ function(input, output) {
 				)
 			)
 			
+			#return plotly chart
 			py
 			
 			
 		} else if(input$plotType == "Line"){
 			
-			
+			#create static ggplot chart
 			p = ggplot() +
 				geom_path(
 					data = temp,
@@ -251,7 +249,7 @@ function(input, output) {
 					)
 				)
 			
-			
+			#convert static ggplot to interactive plotly chart
 			py = ggplotly(
 				p,
 				height = 600,
@@ -263,6 +261,7 @@ function(input, output) {
 				)
 			)
 			
+			#return plotly chart
 			py
 			
 		}
@@ -280,17 +279,17 @@ function(input, output) {
 	
 	
 	
-	# chart data --------------------------------------------------------------
+	# render the chart data --------------------------------------------------------------
 	
 	output$plotData = DT::renderDataTable({
 		temp = mdata[mdata$Question == input$x, ]
 		temp = temp %>% select(`Institution Name`, Year, Value)
 		
-		if (input$showTable == T)
-			temp
+		if (input$showTable == TRUE) temp  #show the table if user clicked check box
 		
 	},
 	
+	#set options for the table
 	filter = "top",
 	options = list(
 		pageLength = 6,
