@@ -68,8 +68,6 @@ function(input, output) {
 		#make the appropriate chart in ggplot
 		if(input$plotType == "Bar"){
 			
-			
-			
 			#warn if missing data
 			if (any(is.na(temp$Value))) {
 				ylab = paste(input$x, "(red lines indicate missing data)")
@@ -103,8 +101,6 @@ function(input, output) {
 					position = "dodge",
 					na.rm = T
 				) +
-				scale_fill_viridis_d(option = tolower(input$colorScheme),
-														 name = "Year") +
 				coord_flip() +
 				theme_bw() +
 				labs(y = ylab) +
@@ -117,6 +113,14 @@ function(input, output) {
 						t = 50
 					)
 				)
+			
+			
+			ifelse(input$colorScheme == "TCC",
+						 {p = p + scale_fill_manual(values = c("#244061", "#63a038", "#0289b2", "grey"),
+						 									name = "Year")},
+						 {p = p + scale_fill_viridis_d(option = tolower(input$colorScheme),
+						 										 name = "Year")}
+			)
 			
 			
 			#convert static ggplot to interactive plotly chart
@@ -190,8 +194,6 @@ function(input, output) {
 					position = "dodge",
 					na.rm = T
 				) +
-				scale_fill_viridis_d(option = tolower(input$colorScheme),
-														 guide = guide_legend(reverse = TRUE)) +
 				theme_bw() +
 				labs(x = ylab, y = NULL) +
 				theme(
@@ -203,6 +205,16 @@ function(input, output) {
 						t = 50
 					)
 				)
+			
+			
+			ifelse(input$colorScheme == "TCC",
+						 {p = p + scale_fill_manual(values = c("#244061", "#63a038", "#0289b2", "grey"),
+						 													 name = "Year")},
+						 {p = p + scale_fill_viridis_d(option = tolower(input$colorScheme),
+						 															guide = guide_legend(reverse = TRUE))}
+			)
+			
+			
 			
 			#convert static ggplot to interactive plotly chart
 			py = ggplotly(
@@ -222,6 +234,21 @@ function(input, output) {
 			
 		} else if(input$plotType == "Line"){
 			
+			
+			
+			#warn if missing data
+			if (any(is.na(temp$Value))) {
+				ylab = paste(input$x, "(red lines indicate missing data)")
+			} else
+				ylab = input$x
+			ylab = str_wrap(ylab, width = 50)  #wrap long labels
+			
+			
+			#add extra space between plot and label if needed
+			space = 25 + 25 * (nchar(ylab) %/% 25)
+			
+			
+			
 			#create static ggplot chart
 			p = ggplot() +
 				geom_path(
@@ -235,8 +262,6 @@ function(input, output) {
 					), 
 					size = 1
 				) + 
-				scale_color_viridis_d(option = tolower(input$colorScheme),
-															name = "Institution") +
 			theme_bw() +
 				labs(x = ylab) +
 				theme(
@@ -248,6 +273,16 @@ function(input, output) {
 						t = 50
 					)
 				)
+			
+			n = length(unique(temp$`Institution Name`))
+			ifelse(input$colorScheme == "TCC",
+						 {p = p + 
+						 	scale_color_manual(values = 
+						 										 	colorRampPalette(c("#244061", "#63a038", "#0289b2", "grey"))(n),
+						 										 name = "Institution") },
+						 {p = p +scale_color_viridis_d(option = tolower(input$colorScheme),
+						 															name = "Institution")}
+			)
 			
 			#convert static ggplot to interactive plotly chart
 			py = ggplotly(

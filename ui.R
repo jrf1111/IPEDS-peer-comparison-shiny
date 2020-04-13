@@ -15,7 +15,7 @@ navbarPage(
 		# ~link to the github repo ----
 		a(href = "https://github.com/jrf1111/IPEDS-peer-comparison-shiny", 
 			list(img(src = "GitHub-Mark-120px-plus.png", width = "20px", height = "20px"),  #images must be stored in the "www" directory
-					 "Click here for the GitHub repo")),
+					 "View code")),
 		
 		
 		hr(), # insert horizontal ruler/line
@@ -52,11 +52,11 @@ navbarPage(
 												
 													 #add tooltip about the color scheme options
 													 tipify(img(src = "tooltip_icon.png", width = "12px", height = "12px"),
-													 			 'These color schemes provide color maps that are perceptually uniform in both color and black-and-white. They are also designed to be perceived by viewers with common forms of color blindness. Learn more <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#introduction">here</a>.',
+													 			 'The color schemes Cividis, Inferno, Magma, Plasma, and Viridis are perceptually uniform in both color and black-and-white. They are also designed to be perceived by viewers with common forms of color blindness. Learn more <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#introduction">here</a>.',
 													 			 trigger = "click", placement = "right"
 													 			 )),
 											
-											c("Cividis", "Inferno", "Magma", "Plasma", "Viridis") ),
+											c("TCC", "Cividis", "Inferno", "Magma", "Plasma", "Viridis") ),
 					
 					#~~~show plot data? ---
 					checkboxInput("showTable", "Show data under plot"),
@@ -97,7 +97,7 @@ navbarPage(
 		# ~link to the github repo ----
 		a(href = "https://github.com/jrf1111/IPEDS-peer-comparison-shiny", 
 			list(img(src = "GitHub-Mark-120px-plus.png", width = "20px", height = "20px"),
-					 "Click here for the GitHub repo")),
+					 "View code")),
 		hr(),
 		
 		#~button to download the data ----
@@ -110,6 +110,49 @@ navbarPage(
 		#~render the data table ----
 		DT::dataTableOutput("table1")
 		
+	),
+	
+	
+	
+
+# About panel ------
+	tabPanel(
+		title = "About",
+		
+		p("By ", 
+			a(href = "https://github.com/jrf1111",  "Jake Roden-Foreman")),
+	
+		p("This is a ",
+			a(href = "https://shiny.rstudio.com/",  "Shiny web app"),
+			" for interacting with ",
+			a(href = "https://nces.ed.gov/ipeds/datacenter/login.aspx?gotoReportId=1", 
+				"IPEDS data", .noWS = "outside"), "."),
+		
+		
+		p("All the resources used to create this are available from ", 
+			a(href = "https://github.com/jrf1111/IPEDS-peer-comparison-shiny", 
+				"the project's GitHub repository", .noWS = "outside"), "."),
+		
+		p("Code is published under a ",
+			a(href = "https://www.gnu.org/licenses/gpl-3.0.txt", "GPL-3 license", 
+				.noWS = "outside"), "."),
+		
+		br(),
+		
+		p("Early versions of this were largely based on ",
+			a(href = "https://github.com/SurajMalpani/Shiny_H1b",
+				"a project by Suraj Malpani"), 
+			" and ",
+			a(href = "https://towardsdatascience.com/plotly-with-r-shiny-495f19f4aba3",
+				"the accompanying blog post", .noWS = "outside"), 
+			"."
+			),
+		
+		
+		
+		
 	)
+	
+	
 	
 )

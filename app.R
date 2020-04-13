@@ -8,4 +8,4 @@ source("server.R")
 # Run the application
 shinyApp(ui = ui,
 				 server = server,
-				 display.mode = "showcase")
+				 display.mode = "normal")

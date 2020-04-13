@@ -2,6 +2,6 @@ Title: IPEDS Peer Comparison Dashboard
 Author: Jake Roden-Foreman
 AuthorUrl: https://github.com/jrf1111
 License: GPL-3
-DisplayMode: Showcase
+DisplayMode: Normal
 Tags: IPEDS
 Type: Shiny
